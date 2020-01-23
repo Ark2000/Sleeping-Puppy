@@ -2,6 +2,8 @@
 #include <assert.h>	//暂时使用assert处理异常
 #include "internal.h"
 #include "wconfig.h"
+#include "sche_task.h"	//任务队列
+#include "position.h"
 
 void MAINLOOP();
 void CONFIG();
@@ -10,7 +12,8 @@ void EXIT();
 
 int main(int argc, char** argv)
 {
-	W_is_config = 1; CONFIG(); W_is_config = 0;
+	POSITION = CONFIG_;
+	CONFIG();
 
 	assert(SDL_Init(SDL_INIT_EVERYTHING) >= 0);
 
@@ -22,6 +25,7 @@ int main(int argc, char** argv)
 	SDL_SetRenderDrawColor(G_renderer, 0, 0, 0, 255);
 	SDL_SetRenderDrawBlendMode(G_renderer, SDL_BLENDMODE_BLEND);
 
+	POSITION = INIT_;
 	INIT();
 
 	SDL_Event e;
@@ -32,10 +36,14 @@ int main(int argc, char** argv)
 				quit = true;
 			}
 		}
+		POSITION = MAINLOOP_;
 		MAINLOOP();
+		RunTasks();
+
 		SDL_RenderPresent(G_renderer);
 	}
 
+	POSITION = EXIT_;
 	EXIT();
 
 	SDL_DestroyWindow(G_window);

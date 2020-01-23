@@ -1,73 +1,76 @@
 #include "wconfig.h"	//获取窗口变量的使用权限
+#include "position.h"	//api函数有权知道自己被哪个特殊函数调用
+#include "sche_task.h"	//计划任务，主要用于分层渲染
 #include "internal.h"
-#include <SDL.h>
 #include <assert.h>
 #include "api.h"
 
 //初始化窗口参数
 void SetWindow(const char* caption, int width, int height)
 {
-	assert(W_is_config == 1);	//当前程序一定执行在INIT函数内部。不能在其他地方调用该函数
+	assert(POSITION == CONFIG_);
 	
 	W_CAPTION = caption;
 	W_WIDTH = width;
 	W_HEIGHT =height;
 }
 
-void DrawClear(const Color& col)
+void DrawLine(const Vec2& pos0, const Vec2& pos1, const Color& col, int priority)
 {
-	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	SDL_RenderClear(G_renderer);
+
+	assert(POSITION != CONFIG_);
+
+	static const int TID = 1;
+
+	ScheduledTask task({priority, TID, new DrawLineArg({pos0, pos1, col})});
+
+	TaskEnqueue(task);
 }
 
-void DrawLine(const Vec2& v0, const Vec2& v1, const Color& col)
+void DrawRectB(const Vec2& pos, const Vec2& w_h, const Color& col, int priority)
 {
-	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	SDL_RenderDrawLine(G_renderer, v0.x, v0.y, v1.x, v1.y);
+
+	assert(POSITION != CONFIG_);
+
+	static const int TID = 2;
+
+	ScheduledTask task({priority, TID, new DrawRectArg({pos, w_h, col})});
+
+	TaskEnqueue(task);
 }
 
-void DrawRectB(const Vec2& pos, const Vec2& w_h, const Color& col)
+void DrawRect(const Vec2& pos, const Vec2& w_h, const Color& col, int priority)
 {
-	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	SDL_Rect r = {pos.x, pos.y, w_h.x, w_h.y};
-	SDL_RenderDrawRect(G_renderer, &r);
+
+	assert(POSITION != CONFIG_);
+
+	static const int TID = 3;
+
+	ScheduledTask task({priority, TID, new DrawRectArg({pos, w_h, col})});
+
+	TaskEnqueue(task);
 }
 
-void DrawRect(const Vec2& pos, const Vec2& w_h, const Color& col)
+void DrawCircB(const Vec2& center, int radius, const Color& col, int priority)
 {
-	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	SDL_Rect r = {pos.x, pos.y, w_h.x, w_h.y};
-	SDL_RenderFillRect(G_renderer, &r);
+
+	assert(POSITION != CONFIG_);
+
+	static const int TID = 4;
+
+	ScheduledTask task({priority, TID, new DrawCircArg({center, radius, col})});
+
+	TaskEnqueue(task);
 }
 
-void DrawCircB(const Vec2& center, int radius, const Color& col)
+void DrawCirc(const Vec2& center, int radius, const Color& col, int priority)
 {
-	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	int tx = radius - 1, ty = 0;
-	int rr = radius * radius;
-	while (ty <= tx) {
-		SDL_RenderDrawPoint(G_renderer, center.x + tx, center.y + ty);
-		SDL_RenderDrawPoint(G_renderer, center.x + tx, center.y - ty);
-		SDL_RenderDrawPoint(G_renderer, center.x - tx, center.y + ty);
-		SDL_RenderDrawPoint(G_renderer, center.x - tx, center.y - ty);
-		SDL_RenderDrawPoint(G_renderer, center.x + ty, center.y + tx);
-		SDL_RenderDrawPoint(G_renderer, center.x + ty, center.y - tx);
-		SDL_RenderDrawPoint(G_renderer, center.x - ty, center.y + tx);
-		SDL_RenderDrawPoint(G_renderer, center.x - ty, center.y - tx);
-		for(++ty; tx*tx+ty*ty>rr;--tx);
-	}
-}
 
-void DrawCirc(const Vec2& center, int radius, const Color& col)
-{
-	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	int tx = radius - 1, ty = 0;
-	int rr = radius * radius;
-	while (ty <= tx) {
-		SDL_RenderDrawLine(G_renderer, center.x - tx, center.y + ty, center.x + tx, center.y + ty);
-		SDL_RenderDrawLine(G_renderer, center.x - tx, center.y - ty, center.x + tx, center.y - ty);
-		SDL_RenderDrawLine(G_renderer, center.x - ty, center.y + tx, center.x + ty, center.y + tx);
-		SDL_RenderDrawLine(G_renderer, center.x - ty, center.y - tx, center.x + ty, center.y - tx);
-		for(++ty; tx*tx+ty*ty>rr;--tx);
-	}
+	assert(POSITION != CONFIG_);
+
+	static const int TID = 5;
+
+	ScheduledTask task({priority, TID, new DrawCircArg({center, radius, col})});
+
+	TaskEnqueue(task);
 }
