@@ -1,0 +1,8 @@
+dep/SDL2_image-2.0.5/
+dep/SDL2_mixer-2.0.4/
+dep/SDL2_ttf-2.0.15/
+dep/SDL2-2.0.10/
+
+*.exe
+
+.vscode/
