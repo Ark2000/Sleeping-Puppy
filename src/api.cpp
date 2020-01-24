@@ -74,3 +74,23 @@ void DrawCirc(const Vec2& center, int radius, const Color& col, int priority)
 
 	TaskEnqueue(task);
 }
+
+double GetFPS()
+{
+	return fps_info;
+}
+
+Texture ImportTextureFromFile(const char* path)
+{
+	return Texture(path, 0);
+}
+
+Texture ImportTextureFromBase64(const char* base64)
+{
+	return Texture(base64, 1);
+}
+
+void DrawTexture(Texture& t, Vec2 pos, int scale)
+{
+	t.draw(pos, pos + Vec2(t.w * scale, t.h * scale));
+}

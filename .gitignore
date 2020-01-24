@@ -4,5 +4,6 @@ dep/SDL2_ttf-2.0.15/
 dep/SDL2-2.0.10/
 .vscode/
 
+*.txt
 *.exe
 *.o
