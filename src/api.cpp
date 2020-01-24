@@ -82,15 +82,89 @@ double GetFPS()
 
 Texture ImportTextureFromFile(const char* path)
 {
-	return Texture(path, 0);
+	assert(POSITION == INIT_);
+
+	return Texture(new Texture_(path, 0));
 }
 
 Texture ImportTextureFromBase64(const char* base64)
 {
-	return Texture(base64, 1);
+	assert(POSITION == INIT_);
+
+	return Texture(new Texture_(base64, 1));
 }
 
 void DrawTexture(Texture& t, Vec2 pos, int scale)
 {
-	t.draw(pos, pos + Vec2(t.w * scale, t.h * scale));
+	assert(POSITION != CONFIG_);
+
+	t->draw(pos, pos + Vec2(t->w * scale, t->h * scale));
+}
+
+Timer CreateTimer()
+{
+	return Timer();
+}
+
+void TimerStart(Timer& t)
+{
+	t.start();
+}
+
+void TimerStop(Timer& t)
+{
+	t.stop();
+}
+
+void TimerReset(Timer& t)
+{
+	t.reset();
+}
+
+int GetTime(Timer& t)
+{
+	return t.get();
+}
+
+TiledTexture ImportTiledTextureFromTexture(const Texture& t, int w, int h)
+{
+	assert(POSITION == INIT_);
+
+	return TiledTexture(new TiledTexture_(*t, w, h));
+}
+
+void DrawTile(TiledTexture& tt, int id, Vec2 pos, int scale)
+{
+	assert(POSITION != CONFIG_);
+
+	tt->draw(id, pos, pos + Vec2(tt->cell_w * scale, tt->cell_h * scale));
+}
+
+FrameAnimation ImportFrameAnimationFromTiledTexture(const TiledTexture& tt, int interval, int sid, int eid, int loop)
+{
+	assert(POSITION == INIT_);
+
+	return FrameAnimation(tt, interval, sid, eid, loop);
+}
+
+void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale)
+{
+	assert(POSITION != CONFIG_);
+
+	fa.draw(pos, pos + Vec2(fa.tt->cell_w * scale, fa.tt->cell_h * scale));
+}
+
+void StartAnimation(FrameAnimation& fa)
+{
+	fa.start();
+}
+
+void StopAnimation(FrameAnimation& fa)
+{
+	fa.stop();
+}
+
+void ResetAnimation(FrameAnimation& fa)
+{
+	fa.reset();
 }
