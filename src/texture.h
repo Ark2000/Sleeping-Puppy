@@ -20,7 +20,7 @@ struct Texture_
 	//拷贝赋值
 	Texture_& operator=(const Texture_& r);
 
-	Texture_& draw(Vec2 area0, Vec2 area1);
+	Texture_& draw(const Vec2& area0, const Vec2& area1);
 
 	int w, h;
 private:
@@ -40,7 +40,7 @@ struct TiledTexture_
 		texture(t_), grid_w(w), grid_h(h),
 		cell_w(t_.w / grid_w), cell_h(t_.h / grid_h) { }
 	
-	TiledTexture_& draw(int id, Vec2 area0, Vec2 area1);
+	TiledTexture_& draw(int id, const Vec2& area0, const Vec2& area1);
 };
 
 typedef std::shared_ptr<Texture_> Texture;
@@ -54,7 +54,7 @@ struct FrameAnimation
 
 	FrameAnimation(const TiledTexture tt_, int interval_, int sid_, int eid_, int loop_ = 1);
 
-	FrameAnimation& draw(Vec2 area0, Vec2 area1);
+	FrameAnimation& draw(const Vec2& area0, const Vec2& area1);
 
 	FrameAnimation& start();
 	FrameAnimation& stop();

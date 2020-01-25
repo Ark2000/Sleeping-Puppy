@@ -61,7 +61,7 @@ Texture_& Texture_::operator=(const Texture_& r)
 	return *this;
 }
 
-Texture_& Texture_::draw(Vec2 area0, Vec2 area1)
+Texture_& Texture_::draw(const Vec2& area0, const Vec2& area1)
 {
 	SDL_Rect srcrect = {0, 0, w, h};
 	SDL_Rect dstrect = {area0.x, area0.y, area1.x - area0.x, area1.y - area0.y};
@@ -70,13 +70,15 @@ Texture_& Texture_::draw(Vec2 area0, Vec2 area1)
 	return *this;
 }
 
-TiledTexture_& TiledTexture_::draw(int id, Vec2 area0, Vec2 area1)
+TiledTexture_& TiledTexture_::draw(int id, const Vec2& area0, const Vec2& area1)
 {
 	assert(id >= 0 && id < grid_w * grid_h);
+
 	int x = id % grid_w;
 	int y = id / grid_w;
 	SDL_Rect srcrect = {x * cell_w, y * cell_h, cell_w, cell_h};
 	SDL_Rect dstrect = {area0.x, area0.y, area1.x - area0.x, area1.y - area0.y};
+
 	SDL_RenderCopy(G_renderer, texture.data, &srcrect, &dstrect);
 
 	return *this;
@@ -88,7 +90,7 @@ tt(tt_), sid(sid_), eid(eid_), interval(interval_), loop(loop_)
 	t.start();
 }
 
-FrameAnimation& FrameAnimation::draw(Vec2 area0, Vec2 area1)
+FrameAnimation& FrameAnimation::draw(const Vec2& area0, const Vec2& area1)
 {
 	int id;
 	if (loop) {

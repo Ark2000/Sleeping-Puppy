@@ -152,6 +152,8 @@ FrameAnimation ImportFrameAnimationFromTiledTexture(const TiledTexture& tt, int 
 
 FrameAnimation ImportFrameAnimationFromTexture(const Texture& t, int w, int h, int interval, int sid, int eid, int loop)
 {
+	assert(POSITION == INIT_);
+
 	return ImportFrameAnimationFromTiledTexture(ImportTiledTextureFromTexture(t, w, h), interval, sid, eid, loop);
 }
 

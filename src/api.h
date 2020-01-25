@@ -6,8 +6,6 @@
 
 void SetWindow(const char* caption, int width, int height);
 
-void Print(const char* str, Vec2 pos = Vec2(0, 0), Vec2 rect = Vec2(5, 5));
-
 void DrawClear(const Color& col = 0xffffffff);
 void DrawLine(const Vec2& pos0, const Vec2& pos1, const Color& col = 0x000000ff, int priority = 0);
 void DrawRectB(const Vec2& pos, const Vec2& w_h, const Color& col = 0x000000ff, int priority = 0);
@@ -34,5 +32,7 @@ void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale = 1, int priority = 0
 void StartAnimation(FrameAnimation& fa);
 void StopAnimation(FrameAnimation& fa);
 void ResetAnimation(FrameAnimation& fa);
+
+void Print(const char* string, const Vec2& pos, const Vec2& w_h);
 
 double GetFPS();

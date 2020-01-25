@@ -5,6 +5,7 @@
 #include "wconfig.h"
 #include "sche_task.h"	//任务队列
 #include "position.h"
+#include "text.h"
 
 void MAINLOOP();
 void CONFIG();
@@ -28,7 +29,8 @@ int main(int argc, char** argv)
 	int imgFlag = IMG_INIT_PNG;
 	assert(IMG_Init(imgFlag) & imgFlag);
 
-	POSITION = INIT_; INIT();
+
+	POSITION = INIT_; LoadFont(); INIT();
 
 	SDL_Event e;
 	bool quit = false;
