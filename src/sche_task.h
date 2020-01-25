@@ -2,6 +2,7 @@
 #include "sche_task.h"
 #include "color.h"
 #include "vec2.h"
+#include "texture.h"
 
 struct ScheduledTask
 {
@@ -34,4 +35,26 @@ struct DrawCircArg
 	Vec2 center;
 	int radius;
 	Color col;
+};
+
+struct DrawTextureArg
+{
+	Texture t;
+	Vec2 pos;
+	int scale;
+};
+
+struct DrawTileArg
+{
+	TiledTexture tt;
+	int id;
+	Vec2 pos;
+	int scale;
+};
+
+struct DrawAnimationArg
+{
+	FrameAnimation* pfa;
+	Vec2 pos;
+	int scale;
 };

@@ -48,7 +48,7 @@ typedef std::shared_ptr<TiledTexture_> TiledTexture;
 
 struct FrameAnimation
 {
-	friend void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale);
+	friend void DrawAnimation_(FrameAnimation* fa, Vec2 pos, int scale);
 
 	FrameAnimation() = default;
 

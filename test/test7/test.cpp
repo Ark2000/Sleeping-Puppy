@@ -13,24 +13,19 @@ void INIT()
 {
 	//太他妈丑了...
 
-	tiled = ImportTiledTextureFromTexture(
-			ImportTextureFromFile("galletcity_tiles.png"),
-			8, 21
-	);
+	Texture galletcity_tiles_png = ImportTextureFromFile("galletcity_tiles.png");
+	Texture flying_creature_cycle_skin_png = ImportTextureFromFile("flying-creature-cycle-skin.png");
 
-	bird_fly = 	ImportFrameAnimationFromTiledTexture(
-				ImportTiledTextureFromTexture(
-				ImportTextureFromFile("flying-creature-cycle-skin.png"),
-				7, 1
-				), 100, 0, 6);
+	tiled = ImportTiledTextureFromTexture(galletcity_tiles_png, 8, 21);
+	bird_fly = 	ImportFrameAnimationFromTexture(flying_creature_cycle_skin_png, 7, 1, 100, 0, 6);
 }
 
 int t = 0;
 void MAINLOOP()
 {
 	DrawClear();
-	DrawTile(tiled, (t / 30) % (8*21), Vec2(0, 0), 8);
-	DrawAnimation(bird_fly, Vec2(100, 100), 5);
+	DrawTile(tiled, (t / 30) % (8*21), Vec2(100, 100), 8, 1);
+	DrawAnimation(bird_fly, Vec2(100, 100), 5, 1);
 	++t;
 }
 

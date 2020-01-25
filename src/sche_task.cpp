@@ -60,37 +60,61 @@ static void RunTask(const ScheduledTask& task)
 	switch (task.taskId) {
 		case 1:
 		{
-			DrawLineArg *args1 = (DrawLineArg*)task.args;
-			DrawLine_(args1->pos0, args1->pos1, args1->col);
-			delete args1;
+			DrawLineArg *args = (DrawLineArg*)task.args;
+			DrawLine_(args->pos0, args->pos1, args->col);
+			delete args;
 			break;
 		}
 		case 2:
 		{
-			DrawRectArg *args2 = (DrawRectArg*)task.args;
-			DrawRectB_(args2->pos, args2->w_h, args2->col);
-			delete args2;
+			DrawRectArg *args = (DrawRectArg*)task.args;
+			DrawRectB_(args->pos, args->w_h, args->col);
+			delete args;
 			break;
 		}
 		case 3:
 		{
-			DrawRectArg *args3 = (DrawRectArg*)task.args;
-			DrawRect_(args3->pos, args3->w_h, args3->col);
-			delete args3;
+			DrawRectArg *args = (DrawRectArg*)task.args;
+			DrawRect_(args->pos, args->w_h, args->col);
+			delete args;
 			break;
 		}
 		case 4:
 		{
-			DrawCircArg *args4 = (DrawCircArg*)task.args;
-			DrawCircB_(args4->center, args4->radius, args4->col);
-			delete args4;
+			DrawCircArg *args = (DrawCircArg*)task.args;
+			DrawCircB_(args->center, args->radius, args->col);
+			delete args;
 			break;
 		}
 		case 5:
 		{
-			DrawCircArg *args5 = (DrawCircArg*)task.args;
-			DrawCirc_(args5->center, args5->radius, args5->col);
-			delete args5;
+			DrawCircArg *args = (DrawCircArg*)task.args;
+			DrawCirc_(args->center, args->radius, args->col);
+			delete args;
+			break;
+		}
+
+		case 6:
+		{
+			DrawTextureArg *args = (DrawTextureArg*)task.args;
+			DrawTexture_(args->t, args->pos, args->scale);
+			delete args;
+			break;
+		}
+
+		case 7:
+		{
+			DrawTileArg *args = (DrawTileArg*)task.args;
+			DrawTile_(args->tt, args->id, args->pos, args->scale);
+			delete args;
+			break;
+		}
+
+		case 8:
+		{
+			DrawAnimationArg *args = (DrawAnimationArg*)task.args;
+			DrawAnimation_(args->pfa, args->pos, args->scale);
+			delete args;
 			break;
 		}
 

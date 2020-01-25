@@ -59,3 +59,18 @@ void DrawCirc_(const Vec2& center, int radius, const Color& col)
 		for(++ty; tx*tx+ty*ty>rr;--tx);
 	}
 }
+
+void DrawTexture_(Texture t, Vec2 pos, int scale)
+{
+	t->draw(pos, pos + Vec2(t->w * scale, t->h * scale));
+}
+
+void DrawTile_(TiledTexture tt, int id, Vec2 pos, int scale)
+{
+	tt->draw(id, pos, pos + Vec2(tt->cell_w * scale, tt->cell_h * scale));
+}
+
+void DrawAnimation_(FrameAnimation* fa, Vec2 pos, int scale)
+{
+	fa->draw(pos, pos + Vec2(fa->tt->cell_w * scale, fa->tt->cell_h * scale));
+}

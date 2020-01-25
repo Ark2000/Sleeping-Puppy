@@ -23,13 +23,14 @@ int GetTime(Timer& t);
 
 Texture ImportTextureFromFile(const char* path);
 Texture ImportTextureFromBase64(const char* base64);
-void DrawTexture(Texture& t, Vec2 pos, int scale = 1);
+void DrawTexture(Texture& t, Vec2 pos, int scale = 1, int priority = 0);
 
 TiledTexture ImportTiledTextureFromTexture(const Texture& t, int w, int h);
-void DrawTile(TiledTexture& tt, int id, Vec2 pos, int scale = 1);
+void DrawTile(TiledTexture& tt, int id, Vec2 pos, int scale = 1, int priority = 0);
 
 FrameAnimation ImportFrameAnimationFromTiledTexture(const TiledTexture& tt, int interval, int sid, int eid, int loop = 1);
-void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale = 1);
+FrameAnimation ImportFrameAnimationFromTexture(const Texture& t, int w, int h, int interval, int sid, int eid, int loop = 1);
+void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale = 1, int priority = 0);
 void StartAnimation(FrameAnimation& fa);
 void StopAnimation(FrameAnimation& fa);
 void ResetAnimation(FrameAnimation& fa);
