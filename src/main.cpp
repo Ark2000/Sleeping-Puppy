@@ -13,6 +13,7 @@ void CONFIG();
 void INIT();
 void EXIT();
 
+int quit_ = 0;
 int main(int argc, char** argv)
 {
 	assert(SDL_Init(SDL_INIT_EVERYTHING) >= 0);
@@ -34,13 +35,12 @@ int main(int argc, char** argv)
 	POSITION = INIT_; LoadFont(); INIT();
 
 	SDL_Event e;
-	bool quit = false;
 	Uint32 t = SDL_GetTicks();
 	int frame = 0;
-	while (!quit) {
+	while (!quit_) {
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
-				quit = true;
+				quit_ = 1;
 			} else
 			if (e.type == SDL_KEYDOWN) {
 				UpdateKeyBoard(e.key.keysym.sym, 0);
@@ -67,7 +67,9 @@ int main(int argc, char** argv)
 		}
 
 		if (frame % 10 == 0) {
-			fps_info = 10000 / (SDL_GetTicks() - t);
+			if (SDL_GetTicks() - t != 0) {
+				fps_info = 10000 / (SDL_GetTicks() - t);
+			}
 			t = SDL_GetTicks();
 		}
 

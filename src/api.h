@@ -40,7 +40,8 @@ int KeyDown(Key k);
 int KeyDownE(Key k);
 int KeyUpE(Key k);
 int KeyTime(Key k);
-
 Vec2 MousePos();
 
 int GetFPS();
+
+void QuitSys();

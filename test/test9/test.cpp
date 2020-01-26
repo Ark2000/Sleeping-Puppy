@@ -6,17 +6,14 @@ void CONFIG()
 	SetWindow("TEXT TEST", 640, 360);
 }
 
-
 void INIT()
 {
-
 }
 
 void MAINLOOP()
 {
-	static char buf[256];
+	static char buf[512];
 	DrawClear(0x1f1f1fff);
-
 	sprintf(buf, "%d", GetFPS());
 	Print(buf, Vec2(0, 0), Vec2(16, 16), 0xf0f0f0ff);
 	sprintf(buf, "%d %d", MousePos().x, MousePos().y);
@@ -33,6 +30,8 @@ void MAINLOOP()
 	Print(buf, Vec2(0, 112), Vec2(16, 16), 0xf0f0f0ff);
 	sprintf(buf, "KEY_MRIGHT: %d %d %d %d", KeyDown(KEY_MRIGHT), KeyDownE(KEY_MRIGHT), KeyUpE(KEY_MRIGHT), KeyTime(KEY_MRIGHT));
 	Print(buf, Vec2(0, 128), Vec2(16, 16), 0xf0f0f0ff);
+
+	if (KeyUpE(KEY_ESCAPE)) QuitSys();
 }
 
 void EXIT()

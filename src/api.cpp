@@ -200,3 +200,9 @@ Vec2 MousePos()
 	SDL_GetMouseState(&pos.x, &pos.y);
 	return pos;
 }
+
+void QuitSys()
+{
+	extern int quit_;
+	quit_ = 1;
+}
