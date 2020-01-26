@@ -1,7 +1,8 @@
 #include "text.h"
+#include "color.h"
 #include <cassert>
 
-const char* font_bitmap = "iVBORw0KGgoAAAANSUhEUgAAAGgAAABAAgMAAACLjdppAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACVBMVEXtHCQAAAD///9YQpCFAAAAAXRSTlMAQObYZgAAAAFiS0dEAmYLfGQAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAHdElNRQfkARkJKReZNOMyAAACeElEQVQ4y31UUY7rMAjE0vLfSnAfV6r/qWTf/yo7A07a7etr0jSJx8DAQEQ+HFq31n226dOXrzbNNGS5ejcVDeVh2nCqWetieBd3wT41wctFLyYbgokvQjOh0DCBc0KhYgMvL1ZOK6NVgyEd7lhSsWoloZNhb4sMNcBwmcqXA54C8fZlPOAMvpY43WqmYNf7EzLQHYxKyIUUrHbZJcQQUFmg2WJDo4EK83NAYogksyBfihS0sWBVSds5hWNzY3mTYZfpWSoWijTwtEDfmcOEPMFnxAgX7U/hDHc7RFRuEEYhhay2DvjqVBACm0glDPpOEoMOyRCxNEVhkUuFhJjhkJ086qK57bBiRuOKWIjCFIwpWOT/X1E8kl//pNDHxd2Tb07gd+ow5vcq5ZRDIPz+0euE9EWvalVCcAWu1u4pCvTC+49ke2HZO6gHC0UXwlhJpcuSN3Ly9WBw6gudZ3VkrljVPHk1zkuSyugJ5dhwpjyo3gGxewGhA5EJWJEjqsKCwcrZcyTPKcx2E6ZbU1k12K5wk5IGocHKj8aJbNa+HX45uKOxVPFHcb5Ao+x68OzZNHsiKyUDdW6LNk8oslCsd3qAHAv1Zs1rC8lPebPKrkdvUPszFlsNm4shaAw5GSbjfvlPOi/PDL2HybIaGXlmDKk2w7iTjMVz+EiXXbdyIWKTkpxV/gUhbNkN48TLCi4J2QHB6ojFVaX3J6Sb4e6rhkvWKt7lGXJaNIwdsyKEC7OOocUHFKVVNHdBGlE62bxfH2NN1LNT/onP8+22aZQVT45i6OVnPHahxiPUw4PgCZXV7YZPG5w90KYfHDap84WGb/KpbkpZ5H8ButiSNX69CcUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDEtMjVUMDk6NDE6MjMrMDA6MDDeWKTPAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAxLTI1VDA5OjQxOjIzKzAwOjAwrwUccwAAAABJRU5ErkJggg==";
+const char* font_bitmap = "iVBORw0KGgoAAAANSUhEUgAAAGgAAABAAQMAAADMLaC5AAAAAXNSR0IB2cksfwAAAAlwSFlzAAASdAAAEnQB3mYfeAAAAAZQTFRFAAAA////pdmf3QAAAAJ0Uk5TAP9bkSK1AAACFklEQVR4nFVSUYrbMBCdsiD6IbL5HIpJrzCpFiHwIEq/e4J+FIFg9iMhMQR2DTUyPcYeoMfYr0CP0J8eYG/hdORtmmaMjR9v5o3ejAD+BemLZVXGcSV8e+gzsHN+vXaCxtEjiEvu7i4p8jSCxOSYU0HDtIEyc/eC4tdZM7WOtE5/FFXN/r0wH8YM15GbwvqI5CwjHLwTJ19mJPAtK+pQkZfPsM9RYqNo0zDCfaYdLxSNHteQPbHXbvyYMatmvzgwF8yZR4AOFtBAh7YLs0kDvlolBODIevrWB3b4AMZJlF5atB5HiC5JIXFoGTfqSCRRdJXL0H7llntz4O2Bz44GgHDx9fbKJZ5zeNduY5z9FRAV9ensb0Y8+xNUFCOZd8Kjjx9AmEw/2BZ9NkV1+ttL0+tgZF4UHSqj96BuZJVIRFjRDo3xQzIVjVCwacQMliPqQB6QzGh0hAZBd6vH0DQSC8pxKTomJg418zoQGrI0/94ARF0Eoqt2VSdJk8iuKlIdti2QHScodRwGd/CX00UMTqDWBcCkmrmFqomAH/9rtZy/C+h0a4kD0EJrACUT2e28TirW7Antz0pAAmP3ZLW1XgFUDvdk7HzmWgeJbl6RCnU6tjcMJ5XXKGW7DEtFJ8Cu/X6awqCIj1q3+/F7GkLAF3mqKspN08DHT8/1ZM/HYZimGSn39BLCr+GSudR4Vem0g96WUDv8AdABuSC21eK3AAAAAElFTkSuQmCC";
 const char* chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
 int code[128];
@@ -22,12 +23,16 @@ void LoadFont()
 	}
 }
 
-void Print(const char* string, const Vec2& pos, const Vec2& w_h)
+void Print(const char* string, const Vec2& pos, const Vec2& w_h, const Color& color)
 {
 	const char* p = string;
 	char c;
 	int col = pos.x;
 	int row = pos.y;
+
+	//default_glyphs->texture.data这个东西不能是private...
+	SDL_SetTextureColorMod(default_glyphs->texture.data, color.r, color.g, color.b);
+
 	while((c = *p++)) {
 		//可打印字符
 		if (c != '\n') {

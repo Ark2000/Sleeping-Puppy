@@ -118,6 +118,15 @@ static void RunTask(const ScheduledTask& task)
 			break;
 		}
 
+		case 9:
+		{
+			void SetKeyEvent(int k, int type);
+			SetKeyEventArg *args = (SetKeyEventArg*)task.args;
+			SetKeyEvent(args->k, args->type);
+			delete args;
+			break;
+		}
+
 		default:
 			assert(0);	//没有对应的任务ID
 	}

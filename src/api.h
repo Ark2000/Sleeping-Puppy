@@ -3,6 +3,7 @@
 #include "vec2.h"
 #include "timer.h"
 #include "texture.h"
+#include "basicio.h"
 
 void SetWindow(const char* caption, int width, int height);
 
@@ -33,6 +34,13 @@ void StartAnimation(FrameAnimation& fa);
 void StopAnimation(FrameAnimation& fa);
 void ResetAnimation(FrameAnimation& fa);
 
-void Print(const char* string, const Vec2& pos, const Vec2& w_h);
+void Print(const char* string, const Vec2& pos, const Vec2& w_h, const Color& col = 0x000000ff);
 
-double GetFPS();
+int KeyDown(Key k);
+int KeyDownE(Key k);
+int KeyUpE(Key k);
+int KeyTime(Key k);
+
+Vec2 MousePos();
+
+int GetFPS();

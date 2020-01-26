@@ -3,4 +3,4 @@
 SDL_Window *G_window;
 SDL_Renderer *G_renderer;
 
-double fps_info;
+int fps_info;

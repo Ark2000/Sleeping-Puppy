@@ -3,6 +3,7 @@
 #include "color.h"
 #include "vec2.h"
 #include "texture.h"
+#include "basicio.h"
 
 struct ScheduledTask
 {
@@ -57,4 +58,10 @@ struct DrawAnimationArg
 	FrameAnimation* pfa;
 	Vec2 pos;
 	int scale;
+};
+
+struct SetKeyEventArg
+{
+	int k;
+	int type;
 };

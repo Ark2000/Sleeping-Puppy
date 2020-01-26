@@ -6,7 +6,6 @@
 
 struct Texture_
 {
-
 	friend struct TiledTexture_;
 
 	//从文件或base64中加载材质
@@ -23,8 +22,8 @@ struct Texture_
 	Texture_& draw(const Vec2& area0, const Vec2& area1);
 
 	int w, h;
-private:
 	SDL_Texture* data;
+private:
 	int* count;	//引用计数
 };
 

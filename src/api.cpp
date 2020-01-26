@@ -92,7 +92,7 @@ void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale, int priority)
 	TaskEnqueue(task);
 }
 
-double GetFPS()
+int GetFPS()
 {
 	return fps_info;
 }
@@ -170,4 +170,33 @@ void StopAnimation(FrameAnimation& fa)
 void ResetAnimation(FrameAnimation& fa)
 {
 	fa.reset();
+}
+
+extern KeyInfo KeyBoard[KEY_TOTAL_COUNT];
+
+int KeyDown(Key k)
+{
+	return KeyBoard[k].is_pressed;
+}
+
+int KeyDownE(Key k)
+{
+	return KeyBoard[k].press_event;
+}
+
+int KeyUpE(Key k)
+{
+	return KeyBoard[k].release_event;
+}
+
+int KeyTime(Key k)
+{
+	return KeyBoard[k].key_timer.get();
+}
+
+Vec2 MousePos()
+{
+	Vec2 pos;
+	SDL_GetMouseState(&pos.x, &pos.y);
+	return pos;
 }
