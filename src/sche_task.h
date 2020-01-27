@@ -65,3 +65,21 @@ struct SetKeyEventArg
 	int k;
 	int type;
 };
+
+struct PrintArg
+{
+	char string[128];
+	Vec2 pos;
+	Vec2 w_h;
+	Color color;
+};
+
+struct PrintCenterArg
+{
+	char string[128];
+	Vec2 area0;
+	Vec2 area1;
+	Vec2 w_h;
+	Vec2 diff;
+	Color color;
+};

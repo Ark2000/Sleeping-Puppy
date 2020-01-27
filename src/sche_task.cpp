@@ -127,6 +127,24 @@ static void RunTask(const ScheduledTask& task)
 			break;
 		}
 
+		case 10:
+		{
+			void Print_(const char* string, const Vec2& pos, const Vec2& w_h, const Color& color);
+			PrintArg *args = (PrintArg*)task.args;
+			Print_(args->string, args->pos, args->w_h, args->color);
+			delete args;
+			break;
+		}
+
+		case 11:
+		{
+			void PrintCenter_(const char* string ,const Vec2& area0, const Vec2& area1, const Vec2& w_h, const Vec2& diff, const Color& color);
+			PrintCenterArg *args = (PrintCenterArg*)task.args;
+			PrintCenter_(args->string, args->area0, args->area1, args->w_h, args->diff, args->color);
+			delete args;
+			break;
+		}
+
 		default:
 			assert(0);	//没有对应的任务ID
 	}

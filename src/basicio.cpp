@@ -39,13 +39,16 @@ void UpdateKeyBoard(int key, int type)
 
 		default: k = 0;
 	}
+
+	const int TID = 9;
+
 	switch (type) {
 		case 0:
 		{
 			if (KeyBoard[k].is_pressed == 1) break;
 			KeyBoard[k].is_pressed = 1;
 			KeyBoard[k].press_event = 1;	//在本次的MAINLOOP执行完毕后需要马上设为0，添加到计划任务
-			TaskEnqueue(ScheduledTask({0, 9, new SetKeyEventArg({k, 0})}));
+			TaskEnqueue(ScheduledTask({0, TID, new SetKeyEventArg({k, 0})}));
 			KeyBoard[k].key_timer.start();
 			break;
 		}
@@ -53,7 +56,7 @@ void UpdateKeyBoard(int key, int type)
 		{
 			KeyBoard[k].is_pressed = 0;
 			KeyBoard[k].release_event = 1;	//在本次的MAINLOOP执行完毕后需要马上设为0，添加到计划任务
-			TaskEnqueue(ScheduledTask({0, 9, new SetKeyEventArg({k, 1})}));
+			TaskEnqueue(ScheduledTask({0, TID, new SetKeyEventArg({k, 1})}));
 			KeyBoard[k].key_timer.reset();
 			break;
 		}

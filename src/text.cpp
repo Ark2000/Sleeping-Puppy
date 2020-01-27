@@ -1,5 +1,6 @@
 #include "text.h"
 #include "color.h"
+#include <cstring>
 #include <cassert>
 
 const char* font_bitmap = "iVBORw0KGgoAAAANSUhEUgAAAGgAAABAAQMAAADMLaC5AAAAAXNSR0IB2cksfwAAAAlwSFlzAAASdAAAEnQB3mYfeAAAAAZQTFRFAAAA////pdmf3QAAAAJ0Uk5TAP9bkSK1AAACFklEQVR4nFVSUYrbMBCdsiD6IbL5HIpJrzCpFiHwIEq/e4J+FIFg9iMhMQR2DTUyPcYeoMfYr0CP0J8eYG/hdORtmmaMjR9v5o3ejAD+BemLZVXGcSV8e+gzsHN+vXaCxtEjiEvu7i4p8jSCxOSYU0HDtIEyc/eC4tdZM7WOtE5/FFXN/r0wH8YM15GbwvqI5CwjHLwTJ19mJPAtK+pQkZfPsM9RYqNo0zDCfaYdLxSNHteQPbHXbvyYMatmvzgwF8yZR4AOFtBAh7YLs0kDvlolBODIevrWB3b4AMZJlF5atB5HiC5JIXFoGTfqSCRRdJXL0H7llntz4O2Bz44GgHDx9fbKJZ5zeNduY5z9FRAV9ensb0Y8+xNUFCOZd8Kjjx9AmEw/2BZ9NkV1+ttL0+tgZF4UHSqj96BuZJVIRFjRDo3xQzIVjVCwacQMliPqQB6QzGh0hAZBd6vH0DQSC8pxKTomJg418zoQGrI0/94ARF0Eoqt2VSdJk8iuKlIdti2QHScodRwGd/CX00UMTqDWBcCkmrmFqomAH/9rtZy/C+h0a4kD0EJrACUT2e28TirW7Antz0pAAmP3ZLW1XgFUDvdk7HzmWgeJbl6RCnU6tjcMJ5XXKGW7DEtFJ8Cu/X6awqCIj1q3+/F7GkLAF3mqKspN08DHT8/1ZM/HYZimGSn39BLCr+GSudR4Vem0g96WUDv8AdABuSC21eK3AAAAAElFTkSuQmCC";
@@ -13,7 +14,6 @@ void LoadFont()
 {
 	Texture font_png = ImportTextureFromBase64(font_bitmap);
 	default_glyphs = ImportTiledTextureFromTexture(font_png, 13, 8);
-
 	for (int i = 0; i < 128; ++i) code[i] = -1;
 	const char* p = chars;
 	int cnt = 0;
@@ -23,7 +23,7 @@ void LoadFont()
 	}
 }
 
-void Print(const char* string, const Vec2& pos, const Vec2& w_h, const Color& color)
+void Print_(const char* string, const Vec2& pos, const Vec2& w_h, const Color& color)
 {
 	const char* p = string;
 	char c;
@@ -39,13 +39,56 @@ void Print(const char* string, const Vec2& pos, const Vec2& w_h, const Color& co
 			assert(c >= 0 && c < 128);
 			if (c != ' ') {
 				int id = code[(int)c];
-				default_glyphs->draw(id, pos + Vec2(col, row), pos + Vec2(col, row) + Vec2(w_h.x, w_h.y));
+				default_glyphs->draw(id, Vec2(col, row), Vec2(col, row) + Vec2(w_h.x, w_h.y));
 			}
 			col += w_h.x;
 		} else {
 			//控制字符
 			col = pos.x;	//回车
 			row += w_h.y;	//换行
+		}
+	}
+}
+
+void PrintCenter_(const char* string ,const Vec2& area0, const Vec2& area1, const Vec2& w_h, const Vec2& diff, const Color& color)
+{
+	SDL_SetTextureColorMod(default_glyphs->texture.data, color.r, color.g, color.b);
+	
+	Vec2 pos;
+
+	{
+		int lines = 0;
+		const char* p = string;
+		while (*p) if (*p++ == '\n') ++lines;
+		++lines;
+		pos.y = area0.y + (area1.y - area0.y - lines * w_h.y) / 2;
+	}
+
+	{
+		const char* p0 = string;
+		const char* p1 = string;
+		while (*p1) {
+			if (*p1 == '\n') {
+				pos.x = area0.x + (area1.x - area0.x - (p1 - p0) * w_h.x) / 2;
+				for (const char* p = p0; p != p1; ++p) {
+					if (*p != ' ') {
+						default_glyphs->draw(code[(int)*p], pos + diff, pos + Vec2(w_h.x, w_h.y) + diff);
+					}
+					pos.x += w_h.x;
+				}
+				++p1;
+				p0 = p1;
+				pos.y += w_h.y;
+			} else {
+				++p1;
+			}
+		}
+		pos.x = area0.x + (area1.x - area0.x - (p1 - p0) * w_h.x) / 2;
+		for (const char* p = p0; p != p1; ++p) {
+			if (*p != ' ') {
+				default_glyphs->draw(code[(int)*p], pos + diff, pos + Vec2(w_h.x, w_h.y) + diff);
+			}
+			pos.x += w_h.x;
 		}
 	}
 }

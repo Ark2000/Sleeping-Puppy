@@ -3,6 +3,7 @@
 #include "sche_task.h"	//计划任务，主要用于分层渲染
 #include "internal.h"
 #include <assert.h>
+#include <cstring>
 #include "api.h"
 
 //初始化窗口参数
@@ -89,6 +90,32 @@ void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale, int priority)
 	
 	static const int TID = 8;
 	ScheduledTask task({priority, TID, new DrawAnimationArg({&fa, pos, scale})});
+	TaskEnqueue(task);
+}
+
+void Print(const char* string, const Vec2& pos, const Vec2& w_h, const Color& col, int priority)
+{
+	assert(POSITION != CONFIG_);
+
+	static const int TID = 10;
+	PrintArg* pa = new PrintArg();
+	assert(strlen(string) < 128);
+	strcpy(pa->string, string);
+	pa->pos = pos; pa->w_h = w_h; pa->color = col;
+	ScheduledTask task({priority, TID, pa});
+	TaskEnqueue(task);
+}
+
+void PrintCenter(const char* string ,const Vec2& area0, const Vec2& area1, const Vec2& w_h, const Vec2& diff, const Color& color, int priority)
+{
+	assert(POSITION != CONFIG_);
+
+	static const int TID = 11;
+	PrintCenterArg* pca = new PrintCenterArg();
+	assert(strlen(string) < 128);
+	strcpy(pca->string, string);
+	pca->area0 = area0; pca->area1 = area1; pca->w_h = w_h; pca->diff = diff; pca->color = color;
+	ScheduledTask task({priority, TID, pca});
 	TaskEnqueue(task);
 }
 

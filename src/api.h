@@ -34,7 +34,8 @@ void StartAnimation(FrameAnimation& fa);
 void StopAnimation(FrameAnimation& fa);
 void ResetAnimation(FrameAnimation& fa);
 
-void Print(const char* string, const Vec2& pos, const Vec2& w_h, const Color& col = 0x000000ff);
+void Print(const char* string, const Vec2& pos, const Vec2& w_h = Vec2(8, 8), const Color& col = 0x000000ff, int priority = 255);
+void PrintCenter(const char* string ,const Vec2& area0, const Vec2& area1, const Vec2& w_h = Vec2(8, 8), const Vec2& diff = Vec2(0, 0), const Color& color = 0x000000ff, int priority = 255);
 
 int KeyDown(Key k);
 int KeyDownE(Key k);
