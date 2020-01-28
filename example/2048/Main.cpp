@@ -77,9 +77,9 @@ struct Tile {
 			++reborn;
 		}
 		int d = (scale - 1) / 2 * sz;
-		DrawRect(Vec2(x-d,y-d), Vec2(sz * scale, sz * scale), color);
+		DrawRect(Vec4(x-d, y-d, sz * scale, sz * scale), color);
 		sprintf(buffer, "%d", num);
-		PrintCenter(buffer, Vec2(x-d, y-d), Vec2(x-d, y-d) + Vec2(sz * scale, sz * scale), Vec2(24, 24), Vec2(0, 0), bgcolor);
+		PrintCenter(buffer, Vec4(x-d, y-d, sz * scale, sz * scale), Vec2(24, 24), bgcolor);
 	}
 
 	void setTarget(int x, int y)
@@ -199,10 +199,10 @@ void handleEvent()
 bool udAll()
 {
 	bool flag = false;
-	DrawRect(Vec2(SX - GAP, SY - GAP), Vec2(SIZE * SZ + GAP * (SIZE + 1), SIZE * SZ + GAP * (SIZE + 1)), colors[11]);
+	DrawRect(Vec4(SX - GAP, SY - GAP, SIZE * SZ + GAP * (SIZE + 1), SIZE * SZ + GAP * (SIZE + 1)), colors[11]);
 	for (int i = 0; i < SIZE; ++i) {
 		for (int j = 0; j < SIZE; ++j) {
-			DrawRect(Vec2(SX+j*(GAP+SZ), SY+i*(GAP+SZ)), Vec2(SZ, SZ), colors[12]);
+			DrawRect(Vec4(SX+j*(GAP+SZ), SY+i*(GAP+SZ), SZ, SZ), colors[12]);
 		}
 	}
 	for (int i = 0; i < SIZE * SIZE; ++i) {
@@ -215,7 +215,7 @@ bool udAll()
 
 void drawText(const char* words, int val, int x, int y)
 {
-	DrawRect(Vec2(x, y), Vec2(100, 50), colors[12]);
+	DrawRect(Vec4(x, y, 100, 50), colors[12]);
 	Print(words, Vec2(x, y), Vec2(16, 16), bgcolor);
 	sprintf(buffer, "%d", val);
 	Print(buffer, Vec2(x, y + 25), Vec2(16, 16), 0xffffffff);

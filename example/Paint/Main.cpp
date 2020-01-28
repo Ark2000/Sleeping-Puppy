@@ -29,14 +29,16 @@ void MAINLOOP()
 		0xff0000ff,
 	};
 	static int ccur;
-	DrawRect(Vec2(0, 0), Vec2(W_, 16), 0x000000ff);
+	DrawRect(Vec4(0, 0, W_, 16), 0x000000ff);
 	sprintf(buffer, "Q<-%d(R)->W A<-%d(G)->S Z<-%d(B)->X", palette[ccur].r, palette[ccur].g, palette[ccur].b);
-	PrintCenter(buffer, Vec2(0, 0), Vec2(W_, 16), Vec2(16, 16), Vec2(0, 0), palette[ccur]);
+	PrintCenter(buffer, Vec4(0, 0, W_, 16), Vec2(16, 16), palette[ccur]);
 	for (int i = 0; i < 8; ++i) {
-		DrawRect(Vec2(0, (i + 3) * 32), Vec2(64, 32), palette[i]);
+		DrawRect(Vec4(0, (i + 3) * 32, 64, 32), palette[i]);
 	}
-	DrawRectB(Vec2(0, (ccur + 3) * 32), Vec2(64, 32), 0x00ff00ff);
 
+	DrawRectB(Vec4(0, (ccur + 3) * 32, 64, 32), 0xff0000ff);
+	DrawRectB(Vec4(0 + 1, (ccur + 3) * 32 + 1, 62, 30), 0xff0000ff);
+	
 	if (KeyDownE(KEY_MLEFT)) {
 		for (int i = 0; i < 8; ++i) {
 			Vec2 mpos = MousePos();

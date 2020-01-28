@@ -14,17 +14,17 @@ void DrawLine_(const Vec2& v0, const Vec2& v1, const Color& col)
 	SDL_RenderDrawLine(G_renderer, v0.x, v0.y, v1.x, v1.y);
 }
 
-void DrawRectB_(const Vec2& pos, const Vec2& w_h, const Color& col)
+void DrawRectB_(const Vec4& rect, const Color& col)
 {
 	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	SDL_Rect r = {pos.x, pos.y, w_h.x, w_h.y};
+	SDL_Rect r = {rect.x, rect.y, rect.w, rect.h};
 	SDL_RenderDrawRect(G_renderer, &r);
 }
 
-void DrawRect_(const Vec2& pos, const Vec2& w_h, const Color& col)
+void DrawRect_(const Vec4& rect, const Color& col)
 {
 	SDL_SetRenderDrawColor(G_renderer, col.r, col.g, col.b, col.a);
-	SDL_Rect r = {pos.x, pos.y, w_h.x, w_h.y};
+	SDL_Rect r = {rect.x, rect.y, rect.w, rect.h};
 	SDL_RenderFillRect(G_renderer, &r);
 }
 
@@ -62,15 +62,15 @@ void DrawCirc_(const Vec2& center, int radius, const Color& col)
 
 void DrawTexture_(Texture t, Vec2 pos, int scale)
 {
-	t->draw(pos, pos + Vec2(t->w * scale, t->h * scale));
+	t->draw(Vec4(pos.x, pos.y, t->w * scale, t->h * scale));
 }
 
 void DrawTile_(TiledTexture tt, int id, Vec2 pos, int scale)
 {
-	tt->draw(id, pos, pos + Vec2(tt->cell_w * scale, tt->cell_h * scale));
+	tt->draw(id, Vec4(pos.x, pos.y, tt->cell_w * scale, tt->cell_h * scale));
 }
 
 void DrawAnimation_(FrameAnimation* fa, Vec2 pos, int scale)
 {
-	fa->draw(pos, pos + Vec2(fa->tt->cell_w * scale, fa->tt->cell_h * scale));
+	fa->draw(Vec4(pos.x, pos.y, fa->tt->cell_w * scale, fa->tt->cell_h * scale));
 }

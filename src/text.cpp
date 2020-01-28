@@ -39,7 +39,7 @@ void Print_(const char* string, const Vec2& pos, const Vec2& w_h, const Color& c
 			assert(c >= 0 && c < 128);
 			if (c != ' ') {
 				int id = code[(int)c];
-				default_glyphs->draw(id, Vec2(col, row), Vec2(col, row) + Vec2(w_h.x, w_h.y));
+				default_glyphs->draw(id, Vec4(col, row, w_h.x, w_h.y));
 			}
 			col += w_h.x;
 		} else {
@@ -50,7 +50,7 @@ void Print_(const char* string, const Vec2& pos, const Vec2& w_h, const Color& c
 	}
 }
 
-void PrintCenter_(const char* string ,const Vec2& area0, const Vec2& area1, const Vec2& w_h, const Vec2& diff, const Color& color)
+void PrintCenter_(const char* string, const Vec4& rect, const Vec2& w_h, const Vec2& diff, const Color& color)
 {
 	SDL_SetTextureColorMod(default_glyphs->texture.data, color.r, color.g, color.b);
 	
@@ -61,7 +61,7 @@ void PrintCenter_(const char* string ,const Vec2& area0, const Vec2& area1, cons
 		const char* p = string;
 		while (*p) if (*p++ == '\n') ++lines;
 		++lines;
-		pos.y = area0.y + (area1.y - area0.y - lines * w_h.y) / 2;
+		pos.y = rect.y + (rect.h - lines * w_h.y) / 2;
 	}
 
 	{
@@ -69,10 +69,10 @@ void PrintCenter_(const char* string ,const Vec2& area0, const Vec2& area1, cons
 		const char* p1 = string;
 		while (*p1) {
 			if (*p1 == '\n') {
-				pos.x = area0.x + (area1.x - area0.x - (p1 - p0) * w_h.x) / 2;
+				pos.x = rect.x + (rect.w - (p1 - p0) * w_h.x) / 2;
 				for (const char* p = p0; p != p1; ++p) {
 					if (*p != ' ') {
-						default_glyphs->draw(code[(int)*p], pos + diff, pos + Vec2(w_h.x, w_h.y) + diff);
+						default_glyphs->draw(code[(int)*p], Vec4(pos.x + diff.x, pos.y + diff.y, w_h.x, w_h.y));
 					}
 					pos.x += w_h.x;
 				}
@@ -83,10 +83,10 @@ void PrintCenter_(const char* string ,const Vec2& area0, const Vec2& area1, cons
 				++p1;
 			}
 		}
-		pos.x = area0.x + (area1.x - area0.x - (p1 - p0) * w_h.x) / 2;
+		pos.x = rect.x + (rect.w - (p1 - p0) * w_h.x) / 2;
 		for (const char* p = p0; p != p1; ++p) {
 			if (*p != ' ') {
-				default_glyphs->draw(code[(int)*p], pos + diff, pos + Vec2(w_h.x, w_h.y) + diff);
+				default_glyphs->draw(code[(int)*p], Vec4(pos.x + diff.x, pos.y + diff.y, w_h.x, w_h.y));
 			}
 			pos.x += w_h.x;
 		}

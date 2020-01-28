@@ -31,12 +31,12 @@ void SayNihao(int init)
 	}
 
 	DrawClear(0x000000ff);
-	PrintCenter(text[t.get() / 3000], Vec2(0, 0), Vec2(W_, H_), Vec2(16, 16), Vec2(0, 0), 0xffffffff, 0);
+	PrintCenter(text[t.get() / 3000], Vec4(0, 0, W_, H_), Vec2(16, 16), 0xffffffff, Vec2(0, 0), 0);
 	int alpha;
 	if (t.get() % 3000 < 1000) alpha = (1000 - t.get() % 3000) * 255 / 1000;
 	else if (t.get() % 3000 < 2000) alpha = 0;
 	else alpha = (t.get() % 3000 - 2000) * 255 / 1000;
-	DrawRect(Vec2(0, 0), Vec2(W_, H_), Color(0, 0, 0, alpha), 0);
+	DrawRect(Vec4(0, 0, W_, H_), Color(0, 0, 0, alpha), 0);
 
 	if (t.get() > 8998) {
 		LoadScene(default_scene);	//场景跳转

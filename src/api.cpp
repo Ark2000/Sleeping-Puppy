@@ -26,23 +26,23 @@ void DrawLine(const Vec2& pos0, const Vec2& pos1, const Color& col, int priority
 	TaskEnqueue(task);
 }
 
-void DrawRectB(const Vec2& pos, const Vec2& w_h, const Color& col, int priority)
+void DrawRectB(const Vec4& rect, const Color& col, int priority)
 {
 
 	assert(POSITION != CONFIG_);
 
 	static const int TID = 2;
-	ScheduledTask task({priority, TID, new DrawRectArg({pos, w_h, col})});
+	ScheduledTask task({priority, TID, new DrawRectArg({rect, col})});
 	TaskEnqueue(task);
 }
 
-void DrawRect(const Vec2& pos, const Vec2& w_h, const Color& col, int priority)
+void DrawRect(const Vec4& rect, const Color& col, int priority)
 {
 
 	assert(POSITION != CONFIG_);
 
 	static const int TID = 3;
-	ScheduledTask task({priority, TID, new DrawRectArg({pos, w_h, col})});
+	ScheduledTask task({priority, TID, new DrawRectArg({rect, col})});
 	TaskEnqueue(task);
 }
 
@@ -106,7 +106,7 @@ void Print(const char* string, const Vec2& pos, const Vec2& w_h, const Color& co
 	TaskEnqueue(task);
 }
 
-void PrintCenter(const char* string ,const Vec2& area0, const Vec2& area1, const Vec2& w_h, const Vec2& diff, const Color& color, int priority)
+void PrintCenter(const char* string, const Vec4& rect, const Vec2& w_h, const Color& color, const Vec2& diff, int priority)
 {
 	assert(POSITION != CONFIG_);
 
@@ -114,7 +114,7 @@ void PrintCenter(const char* string ,const Vec2& area0, const Vec2& area1, const
 	PrintCenterArg* pca = new PrintCenterArg();
 	assert(strlen(string) < 128);
 	strcpy(pca->string, string);
-	pca->area0 = area0; pca->area1 = area1; pca->w_h = w_h; pca->diff = diff; pca->color = color;
+	pca->rect = rect; pca->w_h = w_h; pca->color = color; pca->diff = diff;
 	ScheduledTask task({priority, TID, pca});
 	TaskEnqueue(task);
 }

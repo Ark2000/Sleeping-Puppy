@@ -52,21 +52,3 @@ char* decode(const char* code, int* filesize)
 	}
 	return file;
 }
-/*
-int main()
-{
-	string code;
-	cin >> code;
-
-	int filesize;
-	char* file = decode(code.c_str(), &filesize);
-	ofstream fstrm("file", ios::binary);
-
-	fstrm.write(file, filesize);
-	fstrm.close();
-
-	delete[] file;
-
-	return 0;
-}
-*/

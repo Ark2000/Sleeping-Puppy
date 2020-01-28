@@ -26,8 +26,7 @@ struct DrawLineArg
 
 struct DrawRectArg
 {
-	Vec2 pos;
-	Vec2 w_h;
+	Vec4 rect;
 	Color col;
 };
 
@@ -77,9 +76,8 @@ struct PrintArg
 struct PrintCenterArg
 {
 	char string[128];
-	Vec2 area0;
-	Vec2 area1;
+	Vec4 rect;
 	Vec2 w_h;
-	Vec2 diff;
 	Color color;
+	Vec2 diff;
 };

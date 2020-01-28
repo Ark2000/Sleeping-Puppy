@@ -68,14 +68,14 @@ static void RunTask(const ScheduledTask& task)
 		case 2:
 		{
 			DrawRectArg *args = (DrawRectArg*)task.args;
-			DrawRectB_(args->pos, args->w_h, args->col);
+			DrawRectB_(args->rect, args->col);
 			delete args;
 			break;
 		}
 		case 3:
 		{
 			DrawRectArg *args = (DrawRectArg*)task.args;
-			DrawRect_(args->pos, args->w_h, args->col);
+			DrawRect_(args->rect, args->col);
 			delete args;
 			break;
 		}
@@ -138,9 +138,9 @@ static void RunTask(const ScheduledTask& task)
 
 		case 11:
 		{
-			void PrintCenter_(const char* string ,const Vec2& area0, const Vec2& area1, const Vec2& w_h, const Vec2& diff, const Color& color);
+			void PrintCenter_(const char* string, const Vec4& rect, const Vec2& w_h, const Vec2& diff, const Color& color);
 			PrintCenterArg *args = (PrintCenterArg*)task.args;
-			PrintCenter_(args->string, args->area0, args->area1, args->w_h, args->diff, args->color);
+			PrintCenter_(args->string, args->rect, args->w_h, args->diff, args->color);
 			delete args;
 			break;
 		}
