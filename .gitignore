@@ -7,3 +7,4 @@ dep/SDL2-2.0.10/
 *.txt
 *.exe
 *.o
+*.ogg

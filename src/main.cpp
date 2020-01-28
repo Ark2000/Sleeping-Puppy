@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <assert.h>	//暂时使用assert处理异常
 #include "internal.h"
 #include "wconfig.h"
@@ -30,7 +31,7 @@ int main(int argc, char** argv)
 
 	int imgFlag = IMG_INIT_PNG;
 	assert(IMG_Init(imgFlag) & imgFlag);
-
+	assert(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) != -1);
 
 	POSITION = INIT_; LoadFont(); INIT();
 
@@ -85,6 +86,7 @@ int main(int argc, char** argv)
 	SDL_DestroyWindow(G_window);
 	SDL_DestroyRenderer(G_renderer);
 
+	Mix_CloseAudio();
 	IMG_Quit();
 	SDL_Quit();
 

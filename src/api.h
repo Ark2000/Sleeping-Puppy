@@ -4,6 +4,7 @@
 #include "timer.h"
 #include "texture.h"
 #include "basicio.h"
+#include "sound.h"
 
 void SetWindow(const char* caption, int width, int height);
 
@@ -42,6 +43,16 @@ int KeyDownE(Key k);
 int KeyUpE(Key k);
 int KeyTime(Key k);
 Vec2 MousePos();
+
+Music ImportMusicFromFile(const char* path);
+Sound ImportSoundFromFile(const char* path);
+void PlayMusic(Music mus, int loops);
+void PauseMusic();
+void ResumeMusic();
+int MusicPlaying();
+void PlaySound(Sound s, int loops);
+void SetMusicVolume(int v);
+void SetSoundVolume(int v);
 
 int GetFPS();
 
