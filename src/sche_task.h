@@ -40,23 +40,23 @@ struct DrawCircArg
 struct DrawTextureArg
 {
 	Texture t;
-	Vec2 pos;
-	int scale;
+	Vec4 rect;
+	int flip;
 };
 
 struct DrawTileArg
 {
 	TiledTexture tt;
 	int id;
-	Vec2 pos;
-	int scale;
+	Vec4 rect;
+	int flip;
 };
 
 struct DrawAnimationArg
 {
 	FrameAnimation* pfa;
-	Vec2 pos;
-	int scale;
+	Vec4 rect;
+	int flip;
 };
 
 struct SetKeyEventArg

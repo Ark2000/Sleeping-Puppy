@@ -39,7 +39,7 @@ void Print_(const char* string, const Vec2& pos, const Vec2& w_h, const Color& c
 			assert(c >= 0 && c < 128);
 			if (c != ' ') {
 				int id = code[(int)c];
-				default_glyphs->draw(id, Vec4(col, row, w_h.x, w_h.y));
+				default_glyphs->draw(id, Vec4(col, row, w_h.x, w_h.y), 0);
 			}
 			col += w_h.x;
 		} else {
@@ -72,7 +72,7 @@ void PrintCenter_(const char* string, const Vec4& rect, const Vec2& w_h, const V
 				pos.x = rect.x + (rect.w - (p1 - p0) * w_h.x) / 2;
 				for (const char* p = p0; p != p1; ++p) {
 					if (*p != ' ') {
-						default_glyphs->draw(code[(int)*p], Vec4(pos.x + diff.x, pos.y + diff.y, w_h.x, w_h.y));
+						default_glyphs->draw(code[(int)*p], Vec4(pos.x + diff.x, pos.y + diff.y, w_h.x, w_h.y), 0);
 					}
 					pos.x += w_h.x;
 				}
@@ -86,7 +86,7 @@ void PrintCenter_(const char* string, const Vec4& rect, const Vec2& w_h, const V
 		pos.x = rect.x + (rect.w - (p1 - p0) * w_h.x) / 2;
 		for (const char* p = p0; p != p1; ++p) {
 			if (*p != ' ') {
-				default_glyphs->draw(code[(int)*p], Vec4(pos.x + diff.x, pos.y + diff.y, w_h.x, w_h.y));
+				default_glyphs->draw(code[(int)*p], Vec4(pos.x + diff.x, pos.y + diff.y, w_h.x, w_h.y), 0);
 			}
 			pos.x += w_h.x;
 		}

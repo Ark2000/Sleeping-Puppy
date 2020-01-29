@@ -60,17 +60,17 @@ void DrawCirc_(const Vec2& center, int radius, const Color& col)
 	}
 }
 
-void DrawTexture_(Texture t, Vec2 pos, int scale)
+void DrawTexture_(Texture t, const Vec4& rect, int flip)
 {
-	t->draw(Vec4(pos.x, pos.y, t->w * scale, t->h * scale));
+	t->draw(rect, flip);
 }
 
-void DrawTile_(TiledTexture tt, int id, Vec2 pos, int scale)
+void DrawTile_(TiledTexture tt, int id, const Vec4& rect, int flip)
 {
-	tt->draw(id, Vec4(pos.x, pos.y, tt->cell_w * scale, tt->cell_h * scale));
+	tt->draw(id, rect, flip);
 }
 
-void DrawAnimation_(FrameAnimation* fa, Vec2 pos, int scale)
+void DrawAnimation_(FrameAnimation* fa, const Vec4& rect, int flip)
 {
-	fa->draw(Vec4(pos.x, pos.y, fa->tt->cell_w * scale, fa->tt->cell_h * scale));
+	fa->draw(rect, flip);
 }

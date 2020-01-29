@@ -1,6 +1,6 @@
 CC = g++
 
-EXE = template
+EXE = adventurer
 
 SRC = Main.cpp
 

@@ -61,16 +61,17 @@ Texture_& Texture_::operator=(const Texture_& r)
 	return *this;
 }
 
-Texture_& Texture_::draw(const Vec4& rect)
+Texture_& Texture_::draw(const Vec4& rect, int flip)
 {
 	SDL_Rect srcrect = {0, 0, w, h};
 	SDL_Rect dstrect = {rect.x, rect.y, rect.w, rect.h};
-	SDL_RenderCopy(G_renderer, data, &srcrect, &dstrect);
+	SDL_Point dummy = {0, 0};
+	SDL_RenderCopyEx(G_renderer, data, &srcrect, &dstrect, 0, &dummy, (SDL_RendererFlip)flip);
 
 	return *this;
 }
 
-TiledTexture_& TiledTexture_::draw(int id, const Vec4& rect)
+TiledTexture_& TiledTexture_::draw(int id, const Vec4& rect, int flip)
 {
 	assert(id >= 0 && id < grid_w * grid_h);
 
@@ -78,8 +79,9 @@ TiledTexture_& TiledTexture_::draw(int id, const Vec4& rect)
 	int y = id / grid_w;
 	SDL_Rect srcrect = {x * cell_w, y * cell_h, cell_w, cell_h};
 	SDL_Rect dstrect = {rect.x, rect.y, rect.w, rect.h};
+	SDL_Point dummy = {0, 0};
 
-	SDL_RenderCopy(G_renderer, texture.data, &srcrect, &dstrect);
+	SDL_RenderCopyEx(G_renderer, texture.data, &srcrect, &dstrect, 0, &dummy, (SDL_RendererFlip)flip);
 
 	return *this;
 }
@@ -90,7 +92,7 @@ tt(tt_), sid(sid_), eid(eid_), interval(interval_), loop(loop_)
 	t.start();
 }
 
-FrameAnimation& FrameAnimation::draw(const Vec4& rect)
+FrameAnimation& FrameAnimation::draw(const Vec4& rect, int flip)
 {
 	int id;
 	if (loop) {
@@ -100,7 +102,7 @@ FrameAnimation& FrameAnimation::draw(const Vec4& rect)
 		id = tmp > eid ? eid: tmp;
 	}
 
-	tt->draw(id, rect);
+	tt->draw(id, rect, flip);
 
 	return *this;
 }

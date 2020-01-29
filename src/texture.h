@@ -19,7 +19,7 @@ struct Texture_
 	//拷贝赋值
 	Texture_& operator=(const Texture_& r);
 
-	Texture_& draw(const Vec4& rect);
+	Texture_& draw(const Vec4& rect, int flip);
 
 	int w, h;
 	SDL_Texture* data;
@@ -39,7 +39,7 @@ struct TiledTexture_
 		texture(t_), grid_w(w), grid_h(h),
 		cell_w(t_.w / grid_w), cell_h(t_.h / grid_h) { }
 	
-	TiledTexture_& draw(int id, const Vec4& rect);
+	TiledTexture_& draw(int id, const Vec4& rect, int flip);
 };
 
 typedef std::shared_ptr<Texture_> Texture;
@@ -53,7 +53,7 @@ struct FrameAnimation
 
 	FrameAnimation(const TiledTexture tt_, int interval_, int sid_, int eid_, int loop_ = 1);
 
-	FrameAnimation& draw(const Vec4& rect);
+	FrameAnimation& draw(const Vec4& rect, int flip);
 
 	FrameAnimation& start();
 	FrameAnimation& stop();

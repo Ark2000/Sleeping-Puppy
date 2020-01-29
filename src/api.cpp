@@ -66,30 +66,30 @@ void DrawCirc(const Vec2& center, int radius, const Color& col, int priority)
 	TaskEnqueue(task);
 }
 
-void DrawTexture(Texture& t, Vec2 pos, int scale, int priority)
+void DrawTexture(Texture& t, const Vec4& rect, int flip, int priority)
 {
 	assert(POSITION != CONFIG_);
 
 	static const int TID = 6;
-	ScheduledTask task({priority, TID, new DrawTextureArg({t, pos, scale})});
+	ScheduledTask task({priority, TID, new DrawTextureArg({t, rect, flip})});
 	TaskEnqueue(task);
 }
 
-void DrawTile(TiledTexture& tt, int id, Vec2 pos, int scale, int priority)
+void DrawTile(TiledTexture& tt, int id, const Vec4& rect, int flip, int priority)
 {
 	assert(POSITION != CONFIG_);
 
 	static const int TID = 7;
-	ScheduledTask task({priority, TID, new DrawTileArg({tt, id, pos, scale})});
+	ScheduledTask task({priority, TID, new DrawTileArg({tt, id, rect, flip})});
 	TaskEnqueue(task);
 }
 
-void DrawAnimation(FrameAnimation& fa, Vec2 pos, int scale, int priority)
+void DrawAnimation(FrameAnimation& fa, const Vec4& rect, int flip, int priority)
 {
 	assert(POSITION != CONFIG_);
 	
 	static const int TID = 8;
-	ScheduledTask task({priority, TID, new DrawAnimationArg({&fa, pos, scale})});
+	ScheduledTask task({priority, TID, new DrawAnimationArg({&fa, rect, flip})});
 	TaskEnqueue(task);
 }
 

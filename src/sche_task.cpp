@@ -97,7 +97,7 @@ static void RunTask(const ScheduledTask& task)
 		case 6:
 		{
 			DrawTextureArg *args = (DrawTextureArg*)task.args;
-			DrawTexture_(args->t, args->pos, args->scale);
+			DrawTexture_(args->t, args->rect, args->flip);
 			delete args;
 			break;
 		}
@@ -105,7 +105,7 @@ static void RunTask(const ScheduledTask& task)
 		case 7:
 		{
 			DrawTileArg *args = (DrawTileArg*)task.args;
-			DrawTile_(args->tt, args->id, args->pos, args->scale);
+			DrawTile_(args->tt, args->id, args->rect, args->flip);
 			delete args;
 			break;
 		}
@@ -113,7 +113,7 @@ static void RunTask(const ScheduledTask& task)
 		case 8:
 		{
 			DrawAnimationArg *args = (DrawAnimationArg*)task.args;
-			DrawAnimation_(args->pfa, args->pos, args->scale);
+			DrawAnimation_(args->pfa, args->rect, args->flip);
 			delete args;
 			break;
 		}
